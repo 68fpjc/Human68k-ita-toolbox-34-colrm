@@ -36,8 +36,8 @@ start:
 		dc.b	'#HUPAIR',0
 start1:
 		lea	bss_top(pc),a6
-		lea	stack_bottom(a6),a7		*  A7 := ƒXƒ^ƒbƒN‚Ì’ê
-		lea	$10(a0),a0			*  A0 : PDBƒAƒhƒŒƒX
+		lea	stack_bottom(a6),a7		*  A7 := ã‚¹ã‚¿ãƒƒã‚¯ã®åº•
+		lea	$10(a0),a0			*  A0 : PDBã‚¢ãƒ‰ãƒ¬ã‚¹
 		move.l	a7,d0
 		sub.l	a0,d0
 		move.l	d0,-(a7)
@@ -47,23 +47,23 @@ start1:
 	*
 		move.l	#-1,stdin(a6)
 	*
-	*  ˆø”•À‚ÑŠi”[ƒGƒŠƒA‚ğŠm•Û‚·‚é
+	*  å¼•æ•°ä¸¦ã³æ ¼ç´ã‚¨ãƒªã‚¢ã‚’ç¢ºä¿ã™ã‚‹
 	*
-		lea	1(a2),a0			*  A0 := ƒRƒ}ƒ“ƒhƒ‰ƒCƒ“‚Ì•¶š—ñ‚Ìæ“ªƒAƒhƒŒƒX
-		bsr	strlen				*  D0.L := ƒRƒ}ƒ“ƒhƒ‰ƒCƒ“‚Ì•¶š—ñ‚Ì’·‚³
+		lea	1(a2),a0			*  A0 := ã‚³ãƒãƒ³ãƒ‰ãƒ©ã‚¤ãƒ³ã®æ–‡å­—åˆ—ã®å…ˆé ­ã‚¢ãƒ‰ãƒ¬ã‚¹
+		bsr	strlen				*  D0.L := ã‚³ãƒãƒ³ãƒ‰ãƒ©ã‚¤ãƒ³ã®æ–‡å­—åˆ—ã®é•·ã•
 		addq.l	#1,d0
 		bsr	malloc
 		bmi	insufficient_memory
 
-		movea.l	d0,a1				*  A1 := ˆø”•À‚ÑŠi”[ƒGƒŠƒA‚Ìæ“ªƒAƒhƒŒƒX
+		movea.l	d0,a1				*  A1 := å¼•æ•°ä¸¦ã³æ ¼ç´ã‚¨ãƒªã‚¢ã®å…ˆé ­ã‚¢ãƒ‰ãƒ¬ã‚¹
 	*
-	*  ˆø”‚ğƒfƒR[ƒh‚µC‰ğß‚·‚é
+	*  å¼•æ•°ã‚’ãƒ‡ã‚³ãƒ¼ãƒ‰ã—ï¼Œè§£é‡ˆã™ã‚‹
 	*
-		moveq	#0,d6				*  D6.W : ƒGƒ‰[EƒR[ƒh
-		bsr	DecodeHUPAIR			*  ˆø”‚ğƒfƒR[ƒh‚·‚é
-		movea.l	a1,a0				*  A0 : ˆø”ƒ|ƒCƒ“ƒ^
-		move.l	d0,d7				*  D7.L : ˆø”ƒJƒEƒ“ƒ^
-		moveq	#0,d5				*  D5.L : ƒtƒ‰ƒO
+		moveq	#0,d6				*  D6.W : ã‚¨ãƒ©ãƒ¼ãƒ»ã‚³ãƒ¼ãƒ‰
+		bsr	DecodeHUPAIR			*  å¼•æ•°ã‚’ãƒ‡ã‚³ãƒ¼ãƒ‰ã™ã‚‹
+		movea.l	a1,a0				*  A0 : å¼•æ•°ãƒã‚¤ãƒ³ã‚¿
+		move.l	d0,d7				*  D7.L : å¼•æ•°ã‚«ã‚¦ãƒ³ã‚¿
+		moveq	#0,d5				*  D5.L : ãƒ•ãƒ©ã‚°
 decode_opt_loop1:
 		tst.l	d7
 		beq	decode_opt_done
@@ -160,8 +160,8 @@ endcol_ok:
 		move.l	d1,endcol(a6)
 		beq	bad_arg
 	*
-		moveq	#1,d0				*  o—Í‚Í
-		bsr	is_chrdev			*  ƒLƒƒƒ‰ƒNƒ^EƒfƒoƒCƒX‚©H
+		moveq	#1,d0				*  å‡ºåŠ›ã¯
+		bsr	is_chrdev			*  ã‚­ãƒ£ãƒ©ã‚¯ã‚¿ãƒ»ãƒ‡ãƒã‚¤ã‚¹ã‹ï¼Ÿ
 		seq	do_buffering(a6)
 		beq	input_max			*  -- block device
 
@@ -174,14 +174,14 @@ endcol_ok:
 		btst	#FLAG_B,d5
 		bne	inpbufsize_ok
 
-		bset	#FLAG_C,d5			*  ‰üs‚ğ•ÏŠ·‚·‚é
+		bset	#FLAG_C,d5			*  æ”¹è¡Œã‚’å¤‰æ›ã™ã‚‹
 		bra	inpbufsize_ok
 
 input_max:
 		move.l	#$00ffffff,d0
 inpbufsize_ok:
 		move.l	d0,read_size(a6)
-		*  o—Íƒoƒbƒtƒ@‚ğŠm•Û‚·‚é
+		*  å‡ºåŠ›ãƒãƒƒãƒ•ã‚¡ã‚’ç¢ºä¿ã™ã‚‹
 		tst.b	do_buffering(a6)
 		beq	outbuf_ok
 
@@ -193,7 +193,7 @@ inpbufsize_ok:
 		move.l	d0,outbuf_top(a6)
 		move.l	d0,outbuf_ptr(a6)
 outbuf_ok:
-		*  “ü—Íƒoƒbƒtƒ@‚ğŠm•Û‚·‚é
+		*  å…¥åŠ›ãƒãƒƒãƒ•ã‚¡ã‚’ç¢ºä¿ã™ã‚‹
 		move.l	#$00ffffff,d0
 		bsr	malloc
 		sub.l	#$81000000,d0
@@ -206,19 +206,19 @@ outbuf_ok:
 inpbuf_ok:
 		move.l	d0,inpbuf_top(a6)
 	*
-	*  •W€“ü—Í‚ğØ‚è‘Ö‚¦‚é
+	*  æ¨™æº–å…¥åŠ›ã‚’åˆ‡ã‚Šæ›¿ãˆã‚‹
 	*
-		clr.w	-(a7)				*  •W€“ü—Í‚ğ
-		DOS	_DUP				*  •¡»‚µ‚½ƒnƒ“ƒhƒ‹‚©‚ç“ü—Í‚µC
+		clr.w	-(a7)				*  æ¨™æº–å…¥åŠ›ã‚’
+		DOS	_DUP				*  è¤‡è£½ã—ãŸãƒãƒ³ãƒ‰ãƒ«ã‹ã‚‰å…¥åŠ›ã—ï¼Œ
 		addq.l	#2,a7
 		move.l	d0,stdin(a6)
 		bmi	open_file_failure
 
 		clr.w	-(a7)
-		DOS	_CLOSE				*  •W€“ü—Í‚ÍƒNƒ[ƒY‚·‚éD
-		addq.l	#2,a7				*  ‚±‚¤‚µ‚È‚¢‚Æ ^C ‚â ^S ‚ªŒø‚©‚È‚¢
+		DOS	_CLOSE				*  æ¨™æº–å…¥åŠ›ã¯ã‚¯ãƒ­ãƒ¼ã‚ºã™ã‚‹ï¼
+		addq.l	#2,a7				*  ã“ã†ã—ãªã„ã¨ ^C ã‚„ ^S ãŒåŠ¹ã‹ãªã„
 	*
-	*  ŠJn
+	*  é–‹å§‹
 	*
 		bsr	colrm
 		bsr	flush_outbuf
@@ -226,10 +226,10 @@ exit_program:
 		move.l	stdin(a6),d0
 		bmi	exit_program_1
 
-		clr.w	-(a7)				*  •W€“ü—Í‚ğ
-		move.w	d0,-(a7)			*  Œ³‚É
-		DOS	_DUP2				*  –ß‚·D
-		DOS	_CLOSE				*  •¡»‚ÍƒNƒ[ƒY‚·‚éD
+		clr.w	-(a7)				*  æ¨™æº–å…¥åŠ›ã‚’
+		move.w	d0,-(a7)			*  å…ƒã«
+		DOS	_DUP2				*  æˆ»ã™ï¼
+		DOS	_CLOSE				*  è¤‡è£½ã¯ã‚¯ãƒ­ãƒ¼ã‚ºã™ã‚‹ï¼
 exit_program_1:
 		move.w	d6,-(a7)
 		DOS	_EXIT2
@@ -266,7 +266,7 @@ colrm:
 		sne	terminate_by_ctrlz(a6)
 		sf	terminate_by_ctrld(a6)
 		bsr	is_chrdev
-		beq	colrm_start			*  -- ƒuƒƒbƒNEƒfƒoƒCƒX
+		beq	colrm_start			*  -- ãƒ–ãƒ­ãƒƒã‚¯ãƒ»ãƒ‡ãƒã‚¤ã‚¹
 
 		btst	#5,d0				*  '0':cooked  '1':raw
 		bne	colrm_start
@@ -534,18 +534,18 @@ malloc:
 	dc.b	'## colrm 1.0 ##  Copyright(C)1995 by Itagaki Fumihiko',0
 
 msg_myname:			dc.b	'colrm: ',0
-msg_no_memory:			dc.b	'ƒƒ‚ƒŠ‚ª‘«‚è‚Ü‚¹‚ñ',CR,LF,0
-msg_bad_arg:			dc.b	'ˆø”‚ª³‚µ‚­‚ ‚è‚Ü‚¹‚ñ',0
-msg_too_few_args:		dc.b	'ˆø”‚ª‘«‚è‚Ü‚¹‚ñ',0
-msg_too_many_args:		dc.b	'ˆø”‚ª‘½‰ß‚¬‚Ü‚·',0
-msg_start_column_not_specified:	dc.b	'ŠJnƒJƒ‰ƒ€”Ô†‚ªw’è‚³‚ê‚Ä‚¢‚Ü‚¹‚ñ',CR,LF,0
-msg_start_column_less_than_1:	dc.b	'ŠJnƒJƒ‰ƒ€”Ô†‚ª 1–¢–‚Å‚·',CR,LF,0
-msg_open_fail:			dc.b	'•W€“ü—Í‚ğƒI[ƒvƒ“‚Å‚«‚Ü‚¹‚ñ',CR,LF,0
-msg_read_fail:			dc.b	'“ü—ÍƒGƒ‰[',CR,LF,0
-msg_write_fail:			dc.b	'o—ÍƒGƒ‰[',CR,LF,0
-msg_illegal_option:		dc.b	'•s³‚ÈƒIƒvƒVƒ‡ƒ“ -- ',0
+msg_no_memory:			dc.b	'ãƒ¡ãƒ¢ãƒªãŒè¶³ã‚Šã¾ã›ã‚“',CR,LF,0
+msg_bad_arg:			dc.b	'å¼•æ•°ãŒæ­£ã—ãã‚ã‚Šã¾ã›ã‚“',0
+msg_too_few_args:		dc.b	'å¼•æ•°ãŒè¶³ã‚Šã¾ã›ã‚“',0
+msg_too_many_args:		dc.b	'å¼•æ•°ãŒå¤šéãã¾ã™',0
+msg_start_column_not_specified:	dc.b	'é–‹å§‹ã‚«ãƒ©ãƒ ç•ªå·ãŒæŒ‡å®šã•ã‚Œã¦ã„ã¾ã›ã‚“',CR,LF,0
+msg_start_column_less_than_1:	dc.b	'é–‹å§‹ã‚«ãƒ©ãƒ ç•ªå·ãŒ 1æœªæº€ã§ã™',CR,LF,0
+msg_open_fail:			dc.b	'æ¨™æº–å…¥åŠ›ã‚’ã‚ªãƒ¼ãƒ—ãƒ³ã§ãã¾ã›ã‚“',CR,LF,0
+msg_read_fail:			dc.b	'å…¥åŠ›ã‚¨ãƒ©ãƒ¼',CR,LF,0
+msg_write_fail:			dc.b	'å‡ºåŠ›ã‚¨ãƒ©ãƒ¼',CR,LF,0
+msg_illegal_option:		dc.b	'ä¸æ­£ãªã‚ªãƒ—ã‚·ãƒ§ãƒ³ -- ',0
 msg_usage:			dc.b	CR,LF
-	dc.b	'g—p–@:  colrm [-BCZ] <ŠJnƒJƒ‰ƒ€”Ô†> [<I—¹ƒJƒ‰ƒ€”Ô†>]',CR,LF,0
+	dc.b	'ä½¿ç”¨æ³•:  colrm [-BCZ] <é–‹å§‹ã‚«ãƒ©ãƒ ç•ªå·> [<çµ‚äº†ã‚«ãƒ©ãƒ ç•ªå·>]',CR,LF,0
 *****************************************************************
 .bss
 .even
